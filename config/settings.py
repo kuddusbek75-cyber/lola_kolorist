@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+import dj_database_url
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,8 +14,9 @@ def env_list(name):
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'dev-only-key')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = env_list('ALLOWED_HOSTS')
-CSRF_TRUSTED_ORIGINS = env_list('CSRF_TRUSTED_ORIGINS')
+
+ALLOWED_HOSTS = env_list('ALLOWED_HOSTS') + ['.vercel.app']
+CSRF_TRUSTED_ORIGINS = env_list('CSRF_TRUSTED_ORIGINS') + ['https://*.vercel.app']
 
 INSTALLED_APPS = [
     'salon',  # первым: переопределяет команду runserver
@@ -52,10 +54,13 @@ TEMPLATES = [{
     ]},
 }]
 
-DATABASES = {'default': {
-    'ENGINE': 'django.db.backends.sqlite3',
-    'NAME': BASE_DIR / 'db.sqlite3',
-}}
+# База данных: Neon (PostgreSQL) из DATABASE_URL, иначе локальный SQLite
+DATABASES = {
+    'default': dj_database_url.config(
+        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+        conn_max_age=600,
+    )
+}
 
 LANGUAGE_CODE = 'ru'
 TIME_ZONE = 'Asia/Bishkek'
@@ -79,6 +84,7 @@ if not DEBUG:
 # Telegram CRM bot
 BOT_TOKEN = os.getenv('BOT_TOKEN', '')
 ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', '')
+TELEGRAM_WEBHOOK_SECRET = os.getenv('TELEGRAM_WEBHOOK_SECRET', '')
 
 # Salon info
 SALON_NAME = 'LK beauty studio'
