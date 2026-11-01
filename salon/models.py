@@ -33,3 +33,11 @@ class TelegramAdmin(models.Model):
 
     def __str__(self):
         return self.full_name or self.username or str(self.chat_id)
+
+
+class BotSession(models.Model):
+    """Состояние диалога с ботом. Хранится в базе, потому что на Vercel нет общей памяти."""
+    chat_id = models.BigIntegerField(unique=True)
+    awaiting_password = models.BooleanField(default=False)
+    failed_count = models.PositiveIntegerField(default=0)
+    blocked_until = models.DateTimeField(null=True, blank=True)
