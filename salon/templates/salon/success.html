@@ -1,0 +1,14 @@
+{% extends 'salon/base.html' %}
+{% block title %}Заявка принята — {{ SALON_NAME }}{% endblock %}
+{% block content %}
+<section class="hero">
+  <i class="spark"></i><i class="spark"></i><i class="spark"></i><i class="spark"></i>
+  <i class="spark"></i><i class="spark"></i><i class="spark"></i><i class="spark"></i>
+  <div class="hero-in">
+    <h1 class="gold-text">Заявка принята</h1>
+    <p class="lead">Администратор уже получил её и свяжется с вами по указанному номеру.</p>
+    <p class="addr">{{ SALON_NAME }}, {{ SALON_ADDRESS }}</p>
+    <a class="btn" href="{% url 'index' %}">Вернуться на сайт</a>
+  </div>
+</section>
+{% endblock %}

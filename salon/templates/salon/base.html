@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ SALON_NAME }} — салон красоты{% endblock %}</title>
+  <meta name="description" content="Салон красоты {{ SALON_NAME }}, {{ SALON_ADDRESS }}. Онлайн-запись.">
+  {% load static %}
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="{% url 'index' %}"><b>LK</b> beauty studio</a>
+    <nav>
+      <a href="{% url 'index' %}#zapis">Записаться</a>
+      <a href="{% url 'index' %}#kontakty">Контакты</a>
+    </nav>
+  </header>
+  {% block content %}{% endblock %}
+  <footer class="foot"><p>{{ SALON_NAME }} · {{ SALON_ADDRESS }}</p></footer>
+  <script src="{% static 'js/site.js' %}" defer></script>
+</body>
+</html>
